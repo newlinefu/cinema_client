@@ -1,7 +1,8 @@
 import React from 'react'
-import {Box, CheckBoxGroup, Form, FormField, RangeSelector, Stack, Text, TextInput} from 'grommet'
+import {Box, Button, CheckBoxGroup, Form, FormField, RangeSelector, Stack, Text, TextInput} from 'grommet'
+import {InProgress} from 'grommet-icons'
 
-export default function FilmsSearch({formValues, setFormValues, ratingsData}) {
+export default function FilmsSearch({formValues, setFormValues, ratingsData, genresData, loading, history}) {
 
     return (
         <>
@@ -11,36 +12,59 @@ export default function FilmsSearch({formValues, setFormValues, ratingsData}) {
             >
                 <Form
                     value={formValues}
-                    onChange={(nextValue) => setFormValues(nextValue)}
+                    onChange={(nextValue) => {
+                        setFormValues(nextValue)
+                    }}
                 >
                     <FormField
                         label={'Название'}
                         name={'title'}
-                        margin={{top: 'medium'}}
+                        margin={{top: 'medium', bottom: 'medium'}}
                     >
-                        <TextInput name={'title'} margin={{bottom:'medium'}}/>
+                        <TextInput name={'title'} margin={{bottom: 'medium'}}/>
                     </FormField>
-                    <FormField
-                        label={'Возрастные ограничения'}
-                        name={'ratings'}
-                        margin={{top: 'medium'}}
-                    >
-                        <CheckBoxGroup
-                            name={'ratings'}
-                            options={ratingsData.map(rd => rd.AGE_RATING_INFO)}
-                            margin={{bottom:'medium'}}
-                        />
-                    </FormField>
+                    {
+                        loading
+                            ? <InProgress
+                                margin={{top: 'medium', bottom: 'medium'}}
+                                size={'large'}
+                                color={'brand'}
+                            />
+                            : <>
+                                <FormField
+                                    label={'Возрастные ограничения'}
+                                    name={'ratings'}
+                                    margin={{top: 'medium', bottom: 'medium'}}
+                                >
+                                    <CheckBoxGroup
+                                        name={'ratings'}
+                                        options={ratingsData.map(rd => rd.AGE_RATING_INFO)}
+                                        margin={{bottom: 'medium'}}
+                                    />
+                                </FormField>
+                                <FormField
+                                    label={'Жанры'}
+                                    name={'genres'}
+                                    margin={{top: 'medium', bottom: 'medium'}}
+                                >
+                                    <CheckBoxGroup
+                                        name={'genres'}
+                                        options={genresData.map(g => g.GENRE_INFO)}
+                                        margin={{bottom: 'medium'}}
+                                    />
+                                </FormField>
+                            </>
+                    }
                     <FormField
                         label={'Длительность'}
                         name={'duration'}
-                        margin={{top: 'large'}}
+                        margin={{top: 'medium'}}
                     >
-                        <Stack margin={{bottom:'medium'}}>
+                        <Stack margin={{bottom: 'medium'}}>
                             <Box direction={'row'} justify={'between'}>
-                                {[0, 30, 60, 90, 120, 150, 180, 300].map(value => (
+                                {[0, 30, 60, 90, 120, 150, 180].map(value => (
                                     <Box key={value} pad={'small'} border={false}>
-                                        <Text style={{ fontFamily: 'monospace' }}>
+                                        <Text style={{fontFamily: 'monospace'}}>
                                             {value}
                                         </Text>
                                     </Box>
@@ -50,18 +74,27 @@ export default function FilmsSearch({formValues, setFormValues, ratingsData}) {
                                 direction="horizontal"
                                 invert={false}
                                 min={0}
-                                max={300}
+                                max={180}
                                 size={'full'}
-                                round={'medium'}
+                                round={'small'}
                                 name={'duration'}
                                 values={formValues.duration}
-                                onChange={values => setFormValues({
-                                    ...formValues,
-                                    duration: values
-                                })}
+                                onChange={values => {
+                                    console.log(values)
+                                    setFormValues({
+
+                                        ...formValues,
+                                        duration: values
+                                    })
+                                }}
                             />
                         </Stack>
                     </FormField>
+                    <Button
+                        label={'Добавить фильм'}
+                        onClick={() => history.push('/put_film')}
+                        margin={{vertical: 'medium'}}
+                    />
                 </Form>
             </Box>
         </>

@@ -8,3 +8,11 @@ export function filmsSearchDataSelect(state) {
 export function filmsDataSelect(state) {
     return state.films.filmsData
 }
+
+export function genresDataSelect(state) {
+    return state.films.genresData
+}
+
+export function actualFilmSelect(state) {
+    return state.films.actualFilm
+}

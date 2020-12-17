@@ -2,17 +2,21 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {filmsDataSelect, filmsSearchDataSelect} from '../../../../../redux/selectors/selectors'
 import Films from './Films'
-import {getFilmsFromServ} from '../../../../../redux/reducers/film_reducer'
+import {getFilmsFromServ, setActualFilmAC} from '../../../../../redux/reducers/film_reducer'
 
-function FilmsContainer({filmsData, filmsSearchData, getFilmsFromServ}) {
+function FilmsContainer({filmsData, filmsSearchData, getFilmsFromServ, setActualFilm}) {
 
     const [requestTimeOut, setRequestTimeOut] = useState(undefined)
+    const [loading, setLoading] = useState(true)
 
     function manageRequests() {
         clearTimeout(requestTimeOut)
         setRequestTimeOut (
             setTimeout (
-                () => getFilmsOnAction(),
+                () => {
+                    setLoading(true)
+                    getFilmsOnAction()
+                },
                 500
             )
         )
@@ -23,8 +27,10 @@ function FilmsContainer({filmsData, filmsSearchData, getFilmsFromServ}) {
             filmsSearchData.duration,
             filmsSearchData.title,
             filmsSearchData.ratings,
+            filmsSearchData.genres,
             filmsSearchData.dateTabIndex
         )
+            .then(() => setLoading(false))
             .catch(err => {
                 console.log(err)
                 alert(err.message)
@@ -37,7 +43,9 @@ function FilmsContainer({filmsData, filmsSearchData, getFilmsFromServ}) {
 
     return (
         <Films
+            loading={loading}
             filmsData={filmsData}
+            setActualFilm={setActualFilm}
         />
     )
 }
@@ -50,5 +58,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-    getFilmsFromServ
+    getFilmsFromServ,
+    setActualFilm: setActualFilmAC
 })(FilmsContainer)

@@ -6,11 +6,11 @@ export function asyncReducersDecorator(innerCB, requestCB) {
     return (...requestArgs) => {
         return async dispatch => {
             const response = await requestCB(...requestArgs)
-            if(checkResponse(response)) {
+            if(checkResponse(response) && !response.data.errMessage) {
                 innerCB(dispatch, response.data)
                 return Promise.resolve()
             } else {
-                return Promise.reject(new Error(response.data.errorMessage))
+                return Promise.reject(new Error(response.data.errMessage))
             }
         }
     }

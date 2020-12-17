@@ -1,7 +1,15 @@
 import React from 'react'
-import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Text} from 'grommet'
+import {Button, Card, CardBody, CardFooter, CardHeader, Heading, Text} from 'grommet'
+import {useHistory} from 'react-router-dom'
 
-export default function SingleFilm({id, title, ageRating, duration, genres}) {
+export default function SingleFilm({id, title, ageRating, duration, genres, setActualFilm}) {
+
+    const history = useHistory()
+    const onClickShowFilm = () => {
+        setActualFilm()
+        history.push('/show_film')
+    }
+
     return (
         <Card
             height={{min: 'small', max: 'medium'}}
@@ -9,6 +17,7 @@ export default function SingleFilm({id, title, ageRating, duration, genres}) {
             background={'brand'}
             elevation={'medium'}
             margin={'medium'}
+            pad={'medium'}
         >
             <CardHeader pad={'medium'}>
                 <Heading level={3}>{title}</Heading>
@@ -26,8 +35,16 @@ export default function SingleFilm({id, title, ageRating, duration, genres}) {
                         </span>)
                     }
                 </Text>
-
             </CardBody>
+            <CardFooter
+            >
+                <Button
+                    margin={{horizontal: 'auto'}}
+                    onClick={onClickShowFilm}
+                >
+                    <ins>Посмотреть подробнее</ins>
+                </Button>
+            </CardFooter>
         </Card>
     )
 }

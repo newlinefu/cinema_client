@@ -1,19 +1,31 @@
 import {asyncReducersDecorator} from '../utils/utils'
-import {getAllRatings, getFilms} from '../../API/films_api'
+import {
+    getAllRatings,
+    getFilms,
+    getAllGenres,
+    updateFilm,
+    putFilm,
+    deleteFilm
+} from '../../API/films_api'
 
 const SET_RATINGS = 'SET_RATINGS'
 const SET_FILMS_SEARCH_DATA = 'SET_FILMS_SEARCH_DATA'
 const SET_FILMS_DATA = 'SET_FILMS_DATA'
+const SET_ALL_GENRES = 'SET_ALL_GENRES'
+const SET_ACTUAL_FILM = 'SET_ACTUAL_FILM'
 
 const defaultState = {
     ratingsData: [],
+    genresData: [],
     filmsSearchData: {
         title: '',
         ratings: [],
+        genres: [],
         duration: [0, 300],
         dateTabIndex: 0
     },
-    filmsData: []
+    filmsData: [],
+    actualFilm: {}
 }
 
 export default function filmReducer(state = defaultState, action) {
@@ -22,6 +34,18 @@ export default function filmReducer(state = defaultState, action) {
             return {
                 ...state,
                 ratingsData: action.ratingsData
+            }
+        }
+        case(SET_ACTUAL_FILM): {
+            return {
+                ...state,
+                actualFilm: action.film
+            }
+        }
+        case(SET_ALL_GENRES): {
+            return {
+                ...state,
+                genresData: action.genresData
             }
         }
         case(SET_FILMS_SEARCH_DATA): {
@@ -48,11 +72,24 @@ function setRatingsAC(ratingsData) {
         ratingsData
     }
 }
+function setGenresAC(genresData) {
+    return {
+        type: SET_ALL_GENRES,
+        genresData
+    }
+}
 
 function setFilmsDataAC(newFilmsData) {
     return {
         type: SET_FILMS_DATA,
         newFilmsData
+    }
+}
+
+export function setActualFilmAC(film) {
+    return {
+        type: SET_ACTUAL_FILM,
+        film
     }
 }
 
@@ -68,7 +105,27 @@ export const getRatings = asyncReducersDecorator (
     getAllRatings
 )
 
+export const getGenres = asyncReducersDecorator (
+    (dispatch, data) => dispatch(setGenresAC(data)),
+    getAllGenres
+)
+
 export const getFilmsFromServ = asyncReducersDecorator (
     (dispatch, data) => dispatch(setFilmsDataAC(data)),
     getFilms
+)
+
+export const updateFilmOnServ = asyncReducersDecorator(
+    (dispatch, data) => {},
+    updateFilm
+)
+
+export const putFilmToServ = asyncReducersDecorator(
+    (dispatch, data) => {},
+    putFilm
+)
+
+export const deleteFilmFromServ = asyncReducersDecorator(
+    (dispatch, data) => {},
+    deleteFilm
 )
