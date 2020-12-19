@@ -4,10 +4,10 @@ export function checkResponse(response) {
 
 export function asyncReducersDecorator(innerCB, requestCB) {
     return (...requestArgs) => {
-        return async dispatch => {
+        return async (dispatch, getState) => {
             const response = await requestCB(...requestArgs)
             if(checkResponse(response) && !response.data.errMessage) {
-                innerCB(dispatch, response.data)
+                innerCB(dispatch, response.data, getState)
                 return Promise.resolve()
             } else {
                 return Promise.reject(new Error(response.data.errMessage))

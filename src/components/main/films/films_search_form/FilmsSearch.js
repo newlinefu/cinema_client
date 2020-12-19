@@ -80,7 +80,6 @@ export default function FilmsSearch({formValues, setFormValues, ratingsData, gen
                                 name={'duration'}
                                 values={formValues.duration}
                                 onChange={values => {
-                                    console.log(values)
                                     setFormValues({
 
                                         ...formValues,

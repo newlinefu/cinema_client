@@ -111,9 +111,6 @@ export default function FilmForm({defaultValue, onSubmit, genres, ratings}) {
                             icon={<NavLink to={'/'}><FormPreviousLink color={'dark-3'} size={'large'}/></NavLink>}
                         />
                     }
-                    <Box {...elementsStyles.headingWrapper}>
-                        <Heading {...elementsStyles.heading}>SIGN UP</Heading>
-                    </Box>
                     <FormField
                         label={'Название'}
                         name={'title'}

@@ -16,3 +16,19 @@ export function genresDataSelect(state) {
 export function actualFilmSelect(state) {
     return state.films.actualFilm
 }
+
+export function allFilmsSelect(state) {
+    return state.sessions.allFilmsList
+}
+
+export function allHallsSelect(state) {
+    return state.sessions.hallsList
+}
+
+export function sessionsListSelect(state) {
+    return state.sessions.sessionsList
+}
+
+export function seatsListSelect(state) {
+    return state.tickets.seatsList
+}

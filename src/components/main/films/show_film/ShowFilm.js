@@ -1,6 +1,7 @@
 import React from 'react'
 import {Box, Button, Heading, Paragraph, Text} from 'grommet'
 import {Close, Edit} from 'grommet-icons'
+import SessionsContainer from "../../sessions/SessionsContainer";
 
 
 const styles = {
@@ -9,11 +10,11 @@ const styles = {
     }
 }
 
-export default function ShowFilm({title, description, duration, genres, rating, deleteAction, toEditModeClick}) {
+export default function ShowFilm({title, description, duration, genres, rating, deleteAction, toEditModeClick, filmId}) {
     return (
         <Box
             pad={'large'}
-            width={'large'}
+            fill
         >
             <Heading color={'brand'}>
                 {title}
@@ -46,9 +47,14 @@ export default function ShowFilm({title, description, duration, genres, rating, 
             </Text>
             <Paragraph
                 responsive={true}
+                margin={{bottom: 'large'}}
             >
                 {description}
             </Paragraph>
+
+            <SessionsContainer
+                filmId={filmId}
+            />
         </Box>
     )
 }

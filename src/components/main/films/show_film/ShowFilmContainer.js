@@ -29,6 +29,7 @@ function ShowFilmContainer({actualFilm, deleteFilmFromServ}) {
         <ShowFilm
             deleteAction={() => deleteAction(actualFilm.FILM_ID)}
             toEditModeClick={toEditModeClick}
+            filmId={actualFilm.FILM_ID}
             title={actualFilm.FILM_TITLE}
             description={actualFilm.FILM_DESCRIPTION}
             duration={actualFilm.FILM_MINUTE_DURATION}
