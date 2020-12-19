@@ -32,3 +32,7 @@ export function sessionsListSelect(state) {
 export function seatsListSelect(state) {
     return state.tickets.seatsList
 }
+
+export function statSelect(state) {
+    return state.stat.stat
+}

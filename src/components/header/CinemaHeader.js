@@ -19,6 +19,9 @@ export default function CinemaHeader(props) {
                 <NavLink to={'/sessions'}>
                     <Text color={'light-1'}>Сеансы</Text>
                 </NavLink>
+                <NavLink to={'/stat'}>
+                    <Text color={'light-1'}>Статистика</Text>
+                </NavLink>
             </Box>
         </Box>
     )

@@ -18,7 +18,6 @@ import {
 import {Box} from 'grommet'
 import Sessions from './Sessions'
 import SessionForm from './session_form/SessionForm'
-import {InProgress} from "grommet-icons";
 
 function datePlusHours(date, hours) {
     date.setTime(date.getTime() + (hours * 60 * 60 * 1000))
